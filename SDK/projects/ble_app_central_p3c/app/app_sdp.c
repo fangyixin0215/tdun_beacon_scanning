@@ -53,8 +53,8 @@ void appm_start_scanning(void)
                                           gapm_start_scan_cmd);
         cmd->op.addr_src = GAPM_STATIC_ADDR;
         cmd->op.code = GAPM_SCAN_ACTIVE;  //GAPM_SCAN_PASSIVE; ///190726
-        cmd->interval = 50;		//35;
-        cmd->window  = 	4;	    //35;
+        cmd->interval = 35;		//35;
+        cmd->window  = 	35;	    //35;
         cmd->mode = GAP_OBSERVER_MODE;
         
 #if WHITE_LIST_EN		
@@ -232,7 +232,7 @@ uint8_t appm_adv_data_decode(uint8_t len,const uint8_t *data,uint8_t *find_str,u
         {
         case GAP_AD_TYPE_FLAGS:
         {
-            UART_PRINTF("AD_TYPE :%02x ",data[index + 2]);  
+            //UART_PRINTF("AD_TYPE :%02x ",data[index + 2]);  
             index +=(data[index] + 1);
         }
         break;
