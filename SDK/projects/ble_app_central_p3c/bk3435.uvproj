@@ -363,7 +363,7 @@
               <MiscControls>--c99</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\config;.\app;..\..\sdk\plactform\arch;..\..\sdk\plactform\arch\compiler;..\..\sdk\plactform\arch\ll;..\..\sdk\plactform\arch\boot;..\..\sdk\plactform\arch\main;..\..\sdk\plactform\driver\pwm;..\..\sdk\plactform\driver\adc;..\..\sdk\plactform\driver\audio;..\..\sdk\plactform\driver\wdt;..\..\sdk\plactform\driver\rtc;..\..\sdk\plactform\driver\i2c;..\..\sdk\plactform\driver\utc;..\..\sdk\plactform\driver\ir;..\..\sdk\plactform\driver\spi;..\..\sdk\plactform\driver\plf;..\..\sdk\plactform\driver\counter;..\..\sdk\plactform\driver\gpio;..\..\sdk\plactform\driver\intcntl;..\..\sdk\plactform\driver\icu;..\..\sdk\plactform\driver\intc;..\..\sdk\plactform\driver\flash;..\..\sdk\plactform\driver\timer;..\..\sdk\plactform\driver\reg;..\..\sdk\plactform\driver\uart;..\..\sdk\plactform\driver\emi;..\..\sdk\ble_stack\central\com\rwble;..\..\sdk\ble_stack\central\com\rwble_hl;..\..\sdk\ble_stack\central\com\rwble;..\..\sdk\ble_stack\central\com\rwip\api;..\..\sdk\ble_stack\central\com\rwble_hl;..\..\sdk\ble_stack\central\src;..\..\sdk\plactform\reg;..\..\sdk\plactform\driver\syscntl;..\..\sdk\plactform\rom\hci;..\..\sdk\ble_stack\central\inc;..\..\sdk\ble_stack\central\inc\hci;..\..\sdk\ble_stack\central\inc\h4tl;..\..\sdk\ble_stack\central\inc\ke;..\..\sdk\ble_stack\central\inc\nvds;..\..\sdk\ble_stack\central\inc\ea;..\..\sdk\ble_stack\central\inc\em;..\..\sdk\ble_stack\central\inc\ahi;..\..\sdk\ble_stack\central\inc\ble\hl\gap\gapc;..\..\sdk\ble_stack\central\inc\ble\hl\gap\gapm;..\..\sdk\ble_stack\central\inc\ble\hl\gap\smpc;..\..\sdk\ble_stack\central\inc\ble\hl\gap\smpm;..\..\sdk\ble_stack\central\inc\ble\hl\gatt\attc;..\..\sdk\ble_stack\central\inc\ble\hl\gatt\attm;..\..\sdk\ble_stack\central\inc\ble\hl\gatt\atts;..\..\sdk\ble_stack\central\inc\ble\hl\gatt\gattc;..\..\sdk\ble_stack\central\inc\ble\hl\gatt\gattm;..\..\sdk\ble_stack\central\inc\ble\hl\l2c\l2cc;..\..\sdk\ble_stack\central\inc\ble\hl\l2c\l2cm;..\..\sdk\ble_stack\central\inc\ble\ll\em;..\..\sdk\ble_stack\central\inc\ble\ll\llc;..\..\sdk\ble_stack\central\inc\ble\ll\lld;..\..\sdk\ble_stack\central\inc\ble\ll\llm;..\..\sdk\ble_stack\central\com\rwip\api;..\..\sdk\ble_stack\central\inc\ble\hl\gap;..\..\sdk\ble_stack\central\inc\ble\hl\gatt;..\..\sdk\ble_stack\common\prf;..\..\sdk\ble_stack\common\profiles\dis\diss\src;..\..\sdk\ble_stack\common\profiles\bas\bass\src;..\..\sdk\ble_stack\common\profiles\ancs\ancsc\api;..\..\sdk\ble_stack\common\profiles\ancs\ancsc\src;..\..\sdk\ble_stack\common\profiles\ancs;..\..\sdk\ble_stack\common\profiles\FCC0\api;..\..\sdk\ble_stack\common\profiles\FCC0\src;..\..\sdk\ble_stack\common\profiles\FCC0\util;..\..\sdk\ble_stack\common\profiles\FEE0\api;..\..\sdk\ble_stack\common\profiles\FEE0\src;..\..\sdk\ble_stack\common\profiles\hogp;..\..\sdk\ble_stack\common\profiles\hogp\hogpd\api;..\..\sdk\ble_stack\common\profiles\hogp\hogpd\src;..\..\libs;..\..\sdk\ble_stack\common\profiles\wechat\api;..\..\sdk\ble_stack\common\profiles\wechat\src;.\wechat;..\..\sdk\ble_stack\common\profiles\bas\bass;..\..\sdk\ble_stack\common\profiles\bas\bass\api;..\..\sdk\ble_stack\common\profiles\dis\diss;..\..\sdk\ble_stack\common\profiles\dis\diss\api;..\..\sdk\ble_stack\common\profiles\FFF0\api;..\..\sdk\ble_stack\common\profiles\FFF0;..\..\sdk\ble_stack\common\profiles\oad\api;..\..\sdk\ble_stack\common\profiles\sdp\api;..\..\sdk\ble_stack\common\profiles\sdp\src;..\..\sdk\plactform\com\api;..\..\sdk\plactform\driver\rf;..\..\sdk\ble_stack\central\com\rwble;..\..\sdk\ble_stack\central\com\rwble_hl;..\..\sdk\ble_stack\central\com\rwip\api;..\..\sdk\ble_stack\central\inc\dbg;..\..\sdk\plactform\util;..\..\sdk\plactform\driver\usb;..\..\sdk\plactform\driver\usb\include;..\..\sdk\plactform\driver\usb\include\class;..\..\sdk\plactform\driver\usb\src\cd;..\..\sdk\plactform\driver\usb\src\drivers\comm;..\..\sdk\plactform\driver\usb\src\drivers\msd;..\..\sdk\plactform\driver\usb\src\examples;..\..\sdk\plactform\driver\usb\src\functions\trans_fn;..\..\sdk\plactform\driver\usb\src\systems\none;..\..\sdk\plactform\driver\usb\src\systems\none\afs;..\..\sdk\plactform\driver\usb\src\test;..\..\sdk\plactform\driver\usb\src\test\msd;..\..\sdk\ble_stack\central\com\prf;..\..\sdk\ble_stack\common\profiles\dis\disc\api</IncludePath>
+              <IncludePath>.\config;.\app;..\..\sdk\plactform\arch;..\..\sdk\plactform\arch\compiler;..\..\sdk\plactform\arch\ll;..\..\sdk\plactform\arch\boot;..\..\sdk\plactform\arch\main;..\..\sdk\plactform\driver\pwm;..\..\sdk\plactform\driver\adc;..\..\sdk\plactform\driver\audio;..\..\sdk\plactform\driver\wdt;..\..\sdk\plactform\driver\rtc;..\..\sdk\plactform\driver\i2c;..\..\sdk\plactform\driver\utc;..\..\sdk\plactform\driver\ir;..\..\sdk\plactform\driver\spi;..\..\sdk\plactform\driver\plf;..\..\sdk\plactform\driver\counter;..\..\sdk\plactform\driver\gpio;..\..\sdk\plactform\driver\intcntl;..\..\sdk\plactform\driver\icu;..\..\sdk\plactform\driver\intc;..\..\sdk\plactform\driver\flash;..\..\sdk\plactform\driver\timer;..\..\sdk\plactform\driver\reg;..\..\sdk\plactform\driver\uart;..\..\sdk\plactform\driver\emi;..\..\sdk\ble_stack\central\com\rwble;..\..\sdk\ble_stack\central\com\rwble_hl;..\..\sdk\ble_stack\central\com\rwble;..\..\sdk\ble_stack\central\com\rwip\api;..\..\sdk\ble_stack\central\com\rwble_hl;..\..\sdk\ble_stack\central\src;..\..\sdk\plactform\reg;..\..\sdk\plactform\driver\syscntl;..\..\sdk\plactform\rom\hci;..\..\sdk\ble_stack\central\inc;..\..\sdk\ble_stack\central\inc\hci;..\..\sdk\ble_stack\central\inc\h4tl;..\..\sdk\ble_stack\central\inc\ke;..\..\sdk\ble_stack\central\inc\nvds;..\..\sdk\ble_stack\central\inc\ea;..\..\sdk\ble_stack\central\inc\em;..\..\sdk\ble_stack\central\inc\ahi;..\..\sdk\ble_stack\central\inc\ble\hl\gap\gapc;..\..\sdk\ble_stack\central\inc\ble\hl\gap\gapm;..\..\sdk\ble_stack\central\inc\ble\hl\gap\smpc;..\..\sdk\ble_stack\central\inc\ble\hl\gap\smpm;..\..\sdk\ble_stack\central\inc\ble\hl\gatt\attc;..\..\sdk\ble_stack\central\inc\ble\hl\gatt\attm;..\..\sdk\ble_stack\central\inc\ble\hl\gatt\atts;..\..\sdk\ble_stack\central\inc\ble\hl\gatt\gattc;..\..\sdk\ble_stack\central\inc\ble\hl\gatt\gattm;..\..\sdk\ble_stack\central\inc\ble\hl\l2c\l2cc;..\..\sdk\ble_stack\central\inc\ble\hl\l2c\l2cm;..\..\sdk\ble_stack\central\inc\ble\ll\em;..\..\sdk\ble_stack\central\inc\ble\ll\llc;..\..\sdk\ble_stack\central\inc\ble\ll\lld;..\..\sdk\ble_stack\central\inc\ble\ll\llm;..\..\sdk\ble_stack\central\com\rwip\api;..\..\sdk\ble_stack\central\inc\ble\hl\gap;..\..\sdk\ble_stack\central\inc\ble\hl\gatt;..\..\sdk\ble_stack\common\prf;..\..\sdk\ble_stack\common\profiles\dis\diss\src;..\..\sdk\ble_stack\common\profiles\bas\bass\src;..\..\sdk\ble_stack\common\profiles\ancs\ancsc\api;..\..\sdk\ble_stack\common\profiles\ancs\ancsc\src;..\..\sdk\ble_stack\common\profiles\ancs;..\..\sdk\ble_stack\common\profiles\FCC0\api;..\..\sdk\ble_stack\common\profiles\FCC0\src;..\..\sdk\ble_stack\common\profiles\FCC0\util;..\..\sdk\ble_stack\common\profiles\FEE0\api;..\..\sdk\ble_stack\common\profiles\FEE0\src;..\..\sdk\ble_stack\common\profiles\hogp;..\..\sdk\ble_stack\common\profiles\hogp\hogpd\api;..\..\sdk\ble_stack\common\profiles\hogp\hogpd\src;..\..\libs;..\..\sdk\ble_stack\common\profiles\wechat\api;..\..\sdk\ble_stack\common\profiles\wechat\src;.\wechat;..\..\sdk\ble_stack\common\profiles\bas\bass;..\..\sdk\ble_stack\common\profiles\bas\bass\api;..\..\sdk\ble_stack\common\profiles\dis\diss;..\..\sdk\ble_stack\common\profiles\dis\diss\api;..\..\sdk\ble_stack\common\profiles\FFF0\api;..\..\sdk\ble_stack\common\profiles\FFF0;..\..\sdk\ble_stack\common\profiles\oad\api;..\..\sdk\ble_stack\common\profiles\sdp\api;..\..\sdk\ble_stack\common\profiles\sdp\src;..\..\sdk\plactform\com\api;..\..\sdk\plactform\driver\rf;..\..\sdk\ble_stack\central\com\rwble;..\..\sdk\ble_stack\central\com\rwble_hl;..\..\sdk\ble_stack\central\com\rwip\api;..\..\sdk\ble_stack\central\inc\dbg;..\..\sdk\plactform\util;..\..\sdk\plactform\driver\usb;..\..\sdk\plactform\driver\usb\include;..\..\sdk\plactform\driver\usb\include\class;..\..\sdk\plactform\driver\usb\src\cd;..\..\sdk\plactform\driver\usb\src\drivers\comm;..\..\sdk\plactform\driver\usb\src\drivers\msd;..\..\sdk\plactform\driver\usb\src\examples;..\..\sdk\plactform\driver\usb\src\functions\trans_fn;..\..\sdk\plactform\driver\usb\src\systems\none;..\..\sdk\plactform\driver\usb\src\systems\none\afs;..\..\sdk\plactform\driver\usb\src\test;..\..\sdk\plactform\driver\usb\src\test\msd;..\..\sdk\ble_stack\central\com\prf;..\..\sdk\ble_stack\common\profiles\dis\disc\api;.\device\fall_sensor\algo;.\device\fall_sensor\data;.\device\fall_sensor\drv\gsensor_pressure;.\device\uart_data;..\..\sdk\plactform\driver\uart2</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1195,6 +1195,56 @@
               <FileName>tst_msd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\sdk\plactform\driver\usb\src\test\msd\tst_msd.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>alpsfall.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\fall_sensor\algo\alpsfall.c</FilePath>
+            </File>
+            <File>
+              <FileName>calSleepTime.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\fall_sensor\algo\calSleepTime.c</FilePath>
+            </File>
+            <File>
+              <FileName>stepFall.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\fall_sensor\algo\stepFall.c</FilePath>
+            </File>
+            <File>
+              <FileName>fall_sensor_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\fall_sensor\data\fall_sensor_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>hscdhd003a.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\fall_sensor\drv\gsensor_pressure\hscdhd003a.c</FilePath>
+            </File>
+            <File>
+              <FileName>hsppad042a.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\fall_sensor\drv\gsensor_pressure\hsppad042a.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_to_MTK_protocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\uart_data\ble_to_MTK_protocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\device\uart_data\uart_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\sdk\plactform\driver\uart2\uart2.c</FilePath>
             </File>
           </Files>
         </Group>
