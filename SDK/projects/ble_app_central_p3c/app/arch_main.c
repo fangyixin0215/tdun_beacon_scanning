@@ -64,6 +64,13 @@
 #include "wdt.h"
 #include "user_config.h"
 #include "lld.h"
+/////////////////////////////////////////////
+//add fall sensor drv & algo H file by Fang.
+#include "hscdhd003a.h"
+#include "hsppad042a.h"
+#include "stepFall.h"
+#include "fall_sensor_data.h"
+/////////////////////////////////////////////
 
 #if USB_DRIVER
 extern void usb_init(int);
@@ -188,7 +195,57 @@ uint8_t encrypt_key_array[16] =
 	0x00, 0x78, 0xb6, 0x9d,
 	0x55, 0x38, 0xdd, 0x22
 };
+#if (UART2_DRIVER)
+	static void uart2_rx_handler(uint8_t *buf, uint8_t len)
+	{
+		uart_printf("Uart2 Rx:");
+		for(uint8_t i=0; i<len; i++)
+		{
+			UART_PRINTF("0x%x ", buf[i]);
+		}
+		uart_printf("\r\n");
+	}
+#endif
+void sensor_cb_handler(void)
+{
 
+	int pressure;
+	short x,y,z;
+	//return;
+	hsactd003a_read_accel(&x,&y,&z);
+	//uart_printf("x %x y %x z %x",x,y,z);
+	if(sensor_cnt == 0)//如果计数归零
+	{
+		//////////////////////////////////////////////////////////
+		//重新获取三轴的x,y,z
+		sensor_x = x;
+		sensor_y = y;
+		sensor_z = z;
+		//////////////////////////////////////////////////////////
+		
+		//uart_printf("x %x y %x z %x",sensor_x,sensor_y,sensor_z);
+		//uart_printf("tdun_step_num=%d\r\n",tdun_step_num);
+		if(z_num == 0xf0)
+		{
+			z_num = 0x00;
+		}
+		else
+		{
+			z_num += 0x10;
+		}
+		sensor_cnt = 100;
+	}
+	sensor_cnt--;
+	hsppad042a_enable_meassurement();//开启气压测量使能
+	pressure = hspaad042a_getdata();//获取气压数据
+	fall_sensor_motion_data = ALPSLIB_PutData_Time(x,y,z,pressure,0,0,0,0,0,0);//喂数据
+	tdun_step_num = fall_sensor_motion_data.steps;//获取步数
+	if(get_fall_state()==0)//如果跌倒状态为未记录到跌倒的情况
+	{
+		tdun_fall_state = fall_sensor_motion_data.fall_flag;//记录当前fall_flag
+	}
+	tdun_move_state = fall_sensor_motion_data.walk_run_status;//获取当前运动状态
+}
 
 /**
  *******************************************************************************
@@ -204,7 +261,43 @@ uint8_t system_mode = RW_NO_MODE;
 
 
 extern void uart_stack_register(void* cb);
+extern void i2cs_init(void);//添加i2csc初始化接口的引用
 void rwip_eif_api_init(void);
+
+
+//添加用户代码入口
+void rw_app_enter(void)
+{
+	
+	unsigned char p3c_bk_timer_flag = 0;
+	uart_printf("%s.....>>>>>>\r\n",__func__);
+	if(p3c_bk_timer_flag==0)
+	{
+		p3c_bk_timer_flag=1;
+	}
+	//schedule all pending events
+	rwip_schedule();
+
+	if(p3c_bk_timer_flag==1)
+	{
+		p3c_bk_timer_flag=2;
+		UART_PRINTF("p3c timer start...>>>\r\n");
+		clear_beacon_info();//开机清空beacon mac
+		
+		//启动跌倒传感器的timer
+		ke_timer_set(APP_SENSOR_GET_VAL_TIMER, TASK_APP, 1);//10ms一次
+		
+		//启动uart传输timer
+		ke_timer_set(APP_UART2_TEST_TIMER,TASK_APP ,100);//1秒一次
+	}
+	GLOBAL_INT_DISABLE();
+	
+	Stack_Integrity_Check();
+	GLOBAL_INT_RESTORE();
+
+}
+
+
 void rw_main(void)
 {
     /*
@@ -273,6 +366,24 @@ void rw_main(void)
     usb_init(1);  ///frank 190727
 #endif
 
+	////////////////////////////////////////////////////////////////////
+	//fall sensor drv & algo init
+	i2cs_init();
+	hsactd003a_init();
+	hsppad042a_Init();
+	ALPSLIB_Init();
+	////////////////////////////////////////////////////////////////////
+
+	
+	////////////////////////////////////////////////////////////////////
+	// add uart2 drv
+	//添加uart2驱动代码
+#if (UART2_DRIVER)
+	uart2_init(115200);
+	uart2_cb_register(uart2_rx_handler);
+	UART_PRINTF("start uart2,\r\n");
+#endif
+	////////////////////////////////////////////////////////////////////
     REG_AHB0_ICU_INT_ENABLE |= (0x01 << 15); //BLE INT
     REG_AHB0_ICU_IRQ_ENABLE = 0x03;
 
@@ -282,8 +393,9 @@ void rw_main(void)
     GLOBAL_INT_START();
 
     // set max scan numbers
-    appm_set_max_scan_nums(20);
+	appm_set_max_scan_nums(20);//设置最大扫描数量
 
+	rw_app_enter();//用户app入口函数
 
     UART_PRINTF("start=%x\r\n",EM_BLE_END);
 
