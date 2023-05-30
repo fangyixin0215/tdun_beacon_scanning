@@ -104,7 +104,8 @@ enum appm_msg
 	APP_DISCONNECT_TIMER,
 	APP_PERIOD_TIMER,
 	APP_START_SCAN_TIMER,
-	
+	APP_SENSOR_GET_VAL_TIMER,/*跌倒传感器获取三轴和气压数据的timer*/	
+	APP_UART2_TEST_TIMER,/*uart2串口实验timer*/
 };
 
 
@@ -116,6 +117,7 @@ enum appm_msg
 extern const struct ke_state_handler appm_default_handler;
 extern ke_state_t appm_state[APP_IDX_MAX];
 
+extern void sensor_cb_handler(void);
 /// @} APPTASK
 
 #endif //(BLE_APP_PRESENT)

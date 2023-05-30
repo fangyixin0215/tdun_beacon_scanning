@@ -94,6 +94,8 @@
 #include "app_wlist.h"
 #include "user_config.h"
 
+#include "uart_data.h"
+#include "ble_to_MTK_protocol.h"
 struct gap_bdaddr  con_bdaddr;
 
 /*
@@ -962,14 +964,7 @@ static int gapc_param_update_req_ind_handler(ke_msg_id_t const msgid,
 
 
 struct adv_addr_list_t adv_addr_list;
-uint8_t con_dev_str_name1[] ="BK3435RC";  ///190726
-uint8_t con_dev_str_name2[] ="BEKEN BT4.0 Mouse";
-uint8_t con_dev_str_name3[] ="Surface Mobile Mouse";			//Surface Mobile Mouse
-uint8_t con_dev_str_name4[] ="Microsoft Bluetooth Mouse";		//Microsoft Bluetooth Mouse
-uint8_t con_dev_str_name5[] ="Surface Arc Mouse";			//Microsoft Arc Mouse
-uint8_t con_dev_str_name6[] ="Microsoft Bluetooth Keyboard";	//Microsoft Bluetooth Keyboard
-uint8_t con_dev_str_name7[] ="Surface Keyboard";		//Microsoft Surface Keyboard
-uint8_t con_dev_str_name8[] ="RAPOO BT4.0 Mouse";
+uint8_t con_dev_str_name1[] ="TGVG01";  //P3C项目蓝牙信标名
 uint8_t ltk_buffer[36];
 
 
@@ -979,87 +974,51 @@ static int gapm_adv_report_ind_handler(ke_msg_id_t const msgid,
                                        ke_task_id_t const src_id)
 {
 	uint8_t find1 = 0 ;
-	uint8_t find2 = 0;
-    uint8_t find3 = 0 ;
-	uint8_t find4 = 0;
-    uint8_t find5 = 0 ;
-	uint8_t find6 = 0;
-    uint8_t find7 = 0;
-    uint8_t find8 = 0;
-	uint8_t length = NVDS_LEN_LTK2;
-    uint8_t index;
-    
-    
-    if (ke_state_get(TASK_APP) == APPM_WAIT_SCANNEND)
-            return KE_MSG_CONSUMED;
-
+	if (ke_state_get(TASK_APP) == APPM_WAIT_SCANNEND)
+	{
+		return KE_MSG_CONSUMED;
+	}
+	//UART_PRINTF("%s......................\r\n",__func__);
 	// save peer address	
 	memcpy(&(adv_addr_list.adv_addr[adv_addr_list.nums]),param->adv_addr.addr,6);	
 	adv_addr_list.addr_type[adv_addr_list.nums] = param->adv_addr_type;
 	adv_addr_list.nums++;
     
-    //show_ke_mem();
     if(adv_addr_list.nums>=appm_get_max_scan_nums())
     {
         adv_addr_list.nums=0;
         appm_stop_scanning();
         return KE_MSG_CONSUMED;
     }
-    UART_PRINTF("######################################\r\n");
-    UART_PRINTF("rssi = %d\r\n",param->rssi);
-	UART_PRINTF("device number = %d\r\n", adv_addr_list.nums);
-    UART_PRINTF("param->data_len = %d\r\n", param->data_len);
-	UART_PRINTF("evt_type = %d  :%s\r\n",param->evt_type,(param->evt_type == ADV_CONN_UNDIR) ? "ADV_CONN_UNDIR" :(param->evt_type == ADV_CONN_DIR)? "ADV_CONN_DIR" : (param->evt_type == ADV_DISC_UNDIR)? "ADV_DISC_UNDIR" : (param->evt_type == ADV_NONCONN_UNDIR)? "ADV_NONCONN_UNDIR": "Unknow");
-	UART_PRINTF("addr_type :%d --%s\r\n",param->adv_addr_type,(param->adv_addr_type == 0)? "public" :"random");
-	UART_PRINTF("adv_addr = %02x:%02x:%02x:%02x:%02x:%02x\r\n",param->adv_addr.addr[0],param->adv_addr.addr[1],param->adv_addr.addr[2],param->adv_addr.addr[3],param->adv_addr.addr[4],param->adv_addr.addr[5]);
     app_sec_env.bonded=0;
-    for(index=0;index<APP_IDX_MAX;index++)
-    {
-        if (nvds_get(NVDS_TAG_LTK2+index, &length,ltk_buffer) == NVDS_OK)  
-    	{
-            struct gap_bdaddr  bond_addr;
-    	    memcpy(bond_addr.addr.addr,ltk_buffer,6);
-    		if(memcmp(bond_addr.addr.addr,param->adv_addr.addr,6) == 0)
-        	{
-        		con_bdaddr.addr_type = param->adv_addr_type;
-    	    	memcpy(con_bdaddr.addr.addr,param->adv_addr.addr,6);
-        		UART_PRINTF("find adv device, reconnect index=%x\r\n",index);
-                app_sec_env.bonded=1;
-    			appm_start_connencting(con_bdaddr);
-                return KE_MSG_CONSUMED;
-        	}
-            UART_PRINTF("ltk_buff=%x,%x,%x,%x,%x,%x\r\n",ltk_buffer[0],ltk_buffer[1],ltk_buffer[2],ltk_buffer[3],ltk_buffer[4],ltk_buffer[5]);           
-    	}
-        
-    }        
-	
+
+	//匹配蓝牙名，暂定默认信标蓝牙名
     find1 = appm_adv_data_decode(param->data_len, param->data,con_dev_str_name1,sizeof(con_dev_str_name1)-1);
-	find2 = appm_adv_data_decode(param->data_len, param->data,con_dev_str_name2,sizeof(con_dev_str_name2)-1);
     
-    find3 = appm_adv_data_decode(param->data_len, param->data,con_dev_str_name3,sizeof(con_dev_str_name3)-1);
-    find4 = appm_adv_data_decode(param->data_len, param->data,con_dev_str_name4,sizeof(con_dev_str_name4)-1);
-
-    find5 = appm_adv_data_decode(param->data_len, param->data,con_dev_str_name5,sizeof(con_dev_str_name5)-1);
-    //find6 = appm_adv_data_decode(param->data_len, param->data,con_dev_str_name6,sizeof(con_dev_str_name6)-1);
-    
-    //find7 = appm_adv_data_decode(param->data_len, param->data,con_dev_str_name7,sizeof(con_dev_str_name7)-1);
-    //find8 = appm_adv_data_decode(param->data_len, param->data,con_dev_str_name8,sizeof(con_dev_str_name8)-1);
-    
-    if(find1 == 1 || find2 == 1||find3 == 1 || find4 == 1||find5 == 1 || find6 == 1|| find7 == 1|| find8 == 1)
+    if(find1 == 1)
 	{
-	    con_bdaddr.addr_type = param->adv_addr_type;
-	    memcpy(con_bdaddr.addr.addr,param->adv_addr.addr,6);
-	    appm_start_connencting(con_bdaddr);
-		return KE_MSG_CONSUMED;
+		char temp_addr[20]={0};
+		p3c_beacon_not_find_count = 0;//表示找到信标
+		//UART_PRINTF("\r\n######################################\r\n");
+		//UART_PRINTF("rssi = %d\r\n",param->rssi);
+		//UART_PRINTF("device number = %d\r\n", adv_addr_list.nums);
+		//UART_PRINTF("adv_addr = %02x:%02x:%02x:%02x:%02x:%02x\r\n",param->adv_addr.addr[5],param->adv_addr.addr[4],param->adv_addr.addr[3],param->adv_addr.addr[2],param->adv_addr.addr[1],param->adv_addr.addr[0]);
+		//UART_PRINTF("BLE adv name:%s\r\n",con_dev_str_name1);
+		//UART_PRINTF("######################################\r\n");
+		sprintf(temp_addr,"%02x:%02x:%02x:%02x:%02x:%02x",param->adv_addr.addr[5],param->adv_addr.addr[4],param->adv_addr.addr[3],param->adv_addr.addr[2],param->adv_addr.addr[1],param->adv_addr.addr[0]);
+		is_update_beacon_info(temp_addr,param->rssi);
 	}
-
-	//UART_PRINTF("adv_data =%x,%x\n ",param->data[0],param->data[1]);
-	//for(int len = 0; len < param->data_len; len++)
-	//{
-	//    UART_PRINTF("%02x ",param->data[len]);
-	//}
-	UART_PRINTF("######################################\r\n");
-
+	else
+	{
+		if(p3c_beacon_not_find_count < 200)//最大匹配次数
+		{
+			p3c_beacon_not_find_count++;//未匹配到蓝牙信标 次数累加
+		}
+		else
+		{
+			clear_beacon_info();//若200次都没扫描到则清空
+		}
+	}
 	return KE_MSG_CONSUMED;
 }
 
@@ -1272,6 +1231,54 @@ static int gattc_rd_rsp_event_ind_handler(ke_msg_id_t const msgid,
 	return (KE_MSG_CONSUMED);
 }
 
+
+
+static int app_sensor_get_val_handler(ke_msg_id_t const msgid,
+										  struct gapm_profile_added_ind *param,
+										  ke_task_id_t const dest_id,
+										  ke_task_id_t const src_id)
+{
+	//UART_PRINTF("%s\r\n", __func__);
+	sensor_cb_handler();
+	timer_flag = 0;
+	ke_timer_set(APP_SENSOR_GET_VAL_TIMER, TASK_APP, 1);
+	return KE_MSG_CONSUMED;
+}
+
+
+  static int app_uart2_send_timer_handler(ke_msg_id_t const msgid,
+								  struct gapc_param_update_req_ind const *param,
+								  ke_task_id_t const dest_id,
+								  ke_task_id_t const src_id)
+	{
+		char *temp_buf = NULL;
+		char buf[UART_SEND_BUF_LEN_MAX] = {0};
+		unsigned char *temp_mac=NULL;//记录当前信标mac
+		//e.g. BKXYxxxx,UL03,UL100003|0|00002|0,UL2C0:30:50:44:F2:55,xxxx#
+		
+		uart_ul_data_t temp_u_data ={0};
+		temp_u_data.step_num = get_steps();//获取步数
+		temp_u_data.motion_state = get_move_state();//获取运动状态 0:静止 1.慢走 2.快走 3.慢跑 4.快跑
+		temp_u_data.motion_interval = get_move_ticks_rec();//获取运动时长
+		if(temp_u_data.motion_state)//处于运动状态
+		{
+			temp_u_data.motion_interval+=1;//+1秒
+			set_move_ticks_rec(temp_u_data.motion_interval);//重新设置运动时长 单位：sec
+		}
+		temp_u_data.motion_sensor_state = get_motion_sensor_state();//存在与否 or 初始化是否成功
+		temp_u_data.pressure_sensor_state = get_pressure_sensor_state();//存在与否or 初始化是否成功
+		temp_mac = get_current_beacon_mac();//获取当前信标mac地址
+		memcpy(temp_u_data.mac_str,temp_mac,strlen(temp_mac));
+		//UART_PRINTF(">>>strlen(temp_mac):%d\r\n",strlen(temp_mac));
+		temp_buf = uart_ul_data_joint(temp_u_data);
+		memcpy(buf,temp_buf,strlen(temp_buf));
+			
+		//UART_PRINTF("%s>>>uart2 send :%s len:%d\r\n",__func__,buf,strlen(buf));
+		uart2_send((unsigned char*)buf,strlen(buf));
+		ke_timer_set(APP_UART2_TEST_TIMER,TASK_APP , 100);
+		return KE_MSG_CONSUMED;
+	}
+
 /* Default State handlers definition. */
 const struct ke_msg_handler appm_default_state[] =
 {
@@ -1304,6 +1311,8 @@ const struct ke_msg_handler appm_default_state[] =
 	{GATTC_EVENT_IND_1,               (ke_msg_func_t)gattc_event_ind_handler},
     {GATTC_RD_RSP_IND,(ke_msg_func_t)gattc_rd_rsp_event_ind_handler},
 	
+    {APP_SENSOR_GET_VAL_TIMER,		(ke_msg_func_t)app_sensor_get_val_handler},/*添加传感器timer和handler处理函数*/
+    {APP_UART2_TEST_TIMER,			(ke_msg_func_t)app_uart2_send_timer_handler},/*添加uart2的timer和handler处理函数*/
 };
 
 /* Specifies the message handlers that are common to all states. */
